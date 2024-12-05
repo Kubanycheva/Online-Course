@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class UserProfile(AbstractUser):
     email = models.CharField(max_length=32)
-    password = models.PositiveSmallIntegerField
+    password = models.CharField(max_length=32)
     ROLE_CHOICES = (
         ('клиент', 'клиент'),
         ('преподаватель', 'преподаватель'),
@@ -45,7 +45,7 @@ class Lesson(models.Model):
 
 
 class Assignment(models.Model):
-    title = models.CharField(32, null=True, blank=True)
+    title = models.CharField(max_length=32, null=True, blank=True)
     description = models.TextField()
     due_date = models.DateField(auto_now_add=True)
     course_assignment = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True, related_name='assignment')
