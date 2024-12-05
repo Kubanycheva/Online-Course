@@ -6,9 +6,9 @@ class UserProfile(AbstractUser):
     email = models.CharField(max_length=32)
     password = models.PositiveSmallIntegerField
     ROLE_CHOICES = (
-        ('клиент', 'клиент')
-        ('преподаватель', 'преподаватель')
-        ('администратор', 'администратор')
+        ('клиент', 'клиент'),
+        ('преподаватель', 'преподаватель'),
+        ('администратор', 'администратор'),
     )
     profile_picture = models.ImageField(upload_to='profile')
     bio = models.TextField()
