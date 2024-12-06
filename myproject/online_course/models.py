@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class UserProfile(AbstractUser):
     email = models.CharField(max_length=32)
-    password = models.PositiveSmallIntegerField
+    password = models.CharField(max_length=32)
     ROLE_CHOICES = (
         ('клиент', 'клиент'),
         ('преподаватель', 'преподаватель'),
@@ -24,7 +24,7 @@ class Category(models.Model):
 class Course(models.Model):
     course_name = models.CharField(max_length=32)
     description = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.CADCADE, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     LEVEL_CHOICES = (
         ('начальный', 'начальный'),
         ('средний', 'средний'),
@@ -32,6 +32,9 @@ class Course(models.Model):
     )
     price = models.PositiveIntegerField()
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.course_name
 
 
 class Lesson(models.Model):
@@ -41,15 +44,18 @@ class Lesson(models.Model):
     course_lesson = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True, related_name='lesson')
 
     def __str__(self):
-        return f'{self.course_name} - {self.category}'
+        return self.title
 
 
 class Assignment(models.Model):
-    title = models.CharField(32, null=True, blank=True)
+    title = models.CharField(max_length=32, null=True, blank=True)
     description = models.TextField()
     due_date = models.DateField(auto_now_add=True)
     course_assignment = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True, related_name='assignment')
     students = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True, related_name='students')
+
+    def __str__(self):
+        return f'{self.title} - {self.due_date}'
 
 
 class Exam(models.Model):
@@ -59,6 +65,9 @@ class Exam(models.Model):
     passing_score = models.IntegerField(default=0)
     duration = models.DateTimeField(max_length=32)
 
+    def __str__(self):
+        return f'{self.course_exam} - {self.title}'
+
 
 class Certificate(models.Model):
     student = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True, related_name='student')
@@ -66,10 +75,19 @@ class Certificate(models.Model):
     issued_at = models.DateField(auto_now=True)
     certificate_url = models.URLField(max_length=200, null=True, blank=True)
 
+    def __str__(self):
+        return self.issued_at
+
 
 class Review(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True)
     course_review = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True, related_name='review')
+    rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 5)])
+    comment = models.TextField()
+
+    def __str__(self):
+        return self.user
+
 
 
 
