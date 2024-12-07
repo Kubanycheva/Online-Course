@@ -1,5 +1,5 @@
 from .models import Course, Category
-from modeltranslation.translator import TranslationOptions,register
+from modeltranslation.translator import TranslationOptions, register
 
 
 @register(Course)
