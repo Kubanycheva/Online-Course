@@ -10,6 +10,7 @@ class UserProfile(AbstractUser):
         ('преподаватель', 'преподаватель'),
         ('администратор', 'администратор'),
     )
+    user_role = models.CharField(max_length=16, choices=ROLE_CHOICES, default='клиент')
     profile_picture = models.ImageField(upload_to='profile')
     bio = models.TextField()
 
@@ -30,6 +31,7 @@ class Course(models.Model):
         ('средний', 'средний'),
         ('продвинутый', 'продвинутый'),
     )
+    level = models.CharField(max_length=32, choices=LEVEL_CHOICES, default='начальный')
     price = models.PositiveIntegerField()
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
@@ -63,7 +65,7 @@ class Exam(models.Model):
     course_exam = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True, related_name='exam')
     questions = models.CharField(max_length=65, null=True, blank=True)
     passing_score = models.IntegerField(default=0)
-    duration = models.DateTimeField(max_length=32)
+    duration = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.course_exam} - {self.title}'
