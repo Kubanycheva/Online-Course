@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'online_course',
     'django_filters',
     'rest_framework_swagger',
-    'drf_yasg',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -132,6 +132,7 @@ LANGUAGES = (
 )
 
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+
 MODELTRANSLATION_LANGUAGES = ('en', 'ru')
 
 
