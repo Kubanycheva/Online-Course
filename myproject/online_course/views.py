@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import *
 from .serializers import *
 from rest_framework import viewsets, generics
+from .paginations import CoursePagination
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -12,11 +13,6 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-
-
-class CourseViewSet(viewsets.ModelViewSet):
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
 
 
 class LessonViewSet(viewsets.ModelViewSet):
@@ -42,3 +38,14 @@ class CertificateViewSet(viewsets.ModelViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+
+class CourseListViewSet(viewsets.ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseListSerializer
+
+
+class CourseDetailViewSet(viewsets.ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseDetailSerializer
+    pagination_class = CoursePagination

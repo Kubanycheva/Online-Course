@@ -63,12 +63,16 @@ class Assignment(models.Model):
 class Exam(models.Model):
     title = models.CharField(max_length=32, null=True, blank=True)
     course_exam = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True, related_name='exam')
-    questions = models.CharField(max_length=65, null=True, blank=True)
     passing_score = models.IntegerField(default=0)
     duration = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.course_exam} - {self.title}'
+
+
+class ExamQuestions(models.Model):
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='exam_questions')
+    questions = models.CharField(max_length=65, null=True, blank=True)
 
 
 class Certificate(models.Model):
@@ -78,17 +82,17 @@ class Certificate(models.Model):
     certificate_url = models.URLField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.issued_at
+        return f'{self.issued_at} - {self.certificate_url}'
 
 
 class Review(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True)
     course_review = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True, related_name='review')
-    rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 5)])
+    rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])
     comment = models.TextField()
 
     def __str__(self):
-        return self.user
+        return f'{self.user} - {self.rating}'
 
 
 

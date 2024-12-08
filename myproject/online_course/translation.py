@@ -1,4 +1,5 @@
-from .models import Category, Course, Lesson, Assignment, Exam, Review, Certificate
+from .models import (Category, Course, Lesson, Assignment, Exam, Review,
+                     Certificate, ExamQuestions)
 from modeltranslation.translator import TranslationOptions, register
 
 
@@ -24,7 +25,12 @@ class AssignmentTranslationOptions(TranslationOptions):
 
 @register(Exam)
 class ExamTranslationOptions(TranslationOptions):
-    fields = ('title', 'questions')
+    fields = ('title', )
+
+
+@register(ExamQuestions)
+class ExamTranslationOptions(TranslationOptions):
+    fields = ('questions', )
 
 
 @register(Review)
