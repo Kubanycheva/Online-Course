@@ -18,4 +18,11 @@ router.register(r'review-detail', ReviewViewSet, basename='review-detail')
 
 urlpatterns = [
     path('', include(router.urls)),
+<<<<<<< HEAD
+=======
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+
+>>>>>>> 5d48fff8455dfe79c07639de137faf8ed162cb4c
 ]
