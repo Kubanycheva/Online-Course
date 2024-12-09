@@ -12,7 +12,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class RegisterView(generics.CreateAPIView):
-    serializer_class = UserSerializer
+    serializer_class = UserProfileSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

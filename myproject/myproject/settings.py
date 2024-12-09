@@ -166,7 +166,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'online_course.UserProfile'
 
 
-
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=17),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
