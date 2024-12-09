@@ -8,7 +8,7 @@ class ExamQuestionsInline(TranslationInlineModelAdmin, admin.TabularInline):
     extra = 1
 
 
-@admin.register(Category, Course, Lesson, Assignment, Review, Certificate)
+@admin.register(Category, Course, Lesson, Assignment, Review, Certificate, UserProfile)
 class AllAdmin(TranslationAdmin):
     class Media:
         js = (
@@ -36,4 +36,3 @@ class ExamAdmin(TranslationAdmin):
         }
 
 
-admin.site.register(UserProfile)

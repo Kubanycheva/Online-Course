@@ -1,6 +1,11 @@
 from .models import (Category, Course, Lesson, Assignment, Exam, Review,
-                     Certificate, ExamQuestions)
+                     Certificate, ExamQuestions, UserProfile)
 from modeltranslation.translator import TranslationOptions, register
+
+
+@register(UserProfile)
+class UserprofileTranslationOptions(TranslationOptions):
+    fields = ('bio',)
 
 
 @register(Course)

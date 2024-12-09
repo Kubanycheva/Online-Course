@@ -38,6 +38,12 @@ class Course(models.Model):
     def __str__(self):
         return self.course_name
 
+    def get_average_rating(self):
+        ratings = self.review.all()
+        if ratings.exists():
+            return round(sum(rating.rating for rating in ratings) / ratings.count(), 1)
+        return 0
+
 
 class Lesson(models.Model):
     title = models.CharField(max_length=32, null=True, blank=True)
@@ -93,6 +99,8 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{self.user} - {self.rating}'
+
+
 
 
 

@@ -6,8 +6,10 @@ from .paginations import CoursePagination
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
-    queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+
+    def get_queryset(self):
+        return UserProfile.objects.filter(username=self.request.user)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -43,9 +45,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CourseListViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseListSerializer
+    pagination_class = CoursePagination
 
 
 class CourseDetailViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseDetailSerializer
-    pagination_class = CoursePagination
