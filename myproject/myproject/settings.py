@@ -152,11 +152,8 @@ MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-<<<<<<< HEAD
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 2,
-=======
->>>>>>> 4645b488c2ca1377e19f3fb4e8d8a4f1bbbdbf1f
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
 
@@ -168,10 +165,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'online_course.UserProfile'
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 4645b488c2ca1377e19f3fb4e8d8a4f1bbbdbf1f
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=17),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),

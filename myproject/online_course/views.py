@@ -9,7 +9,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from .permissions import CheckStatus
 
 def course_view(request, course_id):
     course = Course.objects.get(id=course_id)
@@ -100,3 +100,4 @@ class CourseListViewSet(viewsets.ModelViewSet):
 class CourseDetailViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseDetailSerializer
+    permission_classes = [CheckStatus]

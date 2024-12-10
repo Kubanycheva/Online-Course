@@ -77,12 +77,7 @@ class CourseListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ['id', 'course_name', 'created_by', 'price', 'average_rating', 'avg_people']
-    created_by = UserProfileSimpleSerializer()
-
-    class Meta:
-        model = Course
-        fields = ['course_name', 'created_by', 'price', 'average_rating', 'updated_at']
+        fields = ['course_name', 'created_by', 'price', 'average_rating', 'updated_at', 'avg_people']
 
     def get_average_rating(self, obj):
         return obj.get_average_rating()
