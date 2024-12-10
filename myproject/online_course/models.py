@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class UserProfile(AbstractUser):
     email = models.CharField(max_length=32)
-    password = models.CharField(max_length=32)
+    password = models.CharField(max_length=400)
     ROLE_CHOICES = (
         ('клиент', 'клиент'),
         ('преподаватель', 'преподаватель'),
@@ -33,6 +33,7 @@ class Course(models.Model):
     )
     level = models.CharField(max_length=32, choices=LEVEL_CHOICES, default='начальный')
     price = models.PositiveIntegerField()
+    updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     def __str__(self):

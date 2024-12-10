@@ -46,28 +46,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['email', 'password', 'user_role', 'profile_picture', 'bio']
 
 
+class UserProfileSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ['first_name', 'last_name']
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['category_name']
-
-
-class LessonSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Lesson
-        fields = ['title', 'video_url', 'content', 'course_lesson']
-
-
-class AssignmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Assignment
-        fields = ['title', 'description', 'due_date', 'course_assignment', 'students']
-
-
-class ExamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Exam
-        fields = ['title', 'course_exam', 'passing_score', 'duration']
 
 
 class CertificateSerializer(serializers.ModelSerializer):
@@ -83,18 +71,49 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class CourseListSerializer(serializers.ModelSerializer):
+    updated_at = serializers.DateTimeField(format('%m.%Y'))
     average_rating = serializers.SerializerMethodField()
+    created_by = UserProfileSimpleSerializer()
 
     class Meta:
         model = Course
-        fields = ['id', 'course_name', 'created_by', 'price', 'average_rating']
+        fields = ['course_name', 'created_by', 'price', 'average_rating', 'updated_at']
 
     def get_average_rating(self, obj):
         return obj.get_average_rating()
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
+    created_by = UserProfileSimpleSerializer()
+    course_assignment = UserProfileSimpleSerializer()
+
     class Meta:
         model = Course
         fields = ['course_name', 'description', 'category', 'level', 'price', 'created_by']
+
+
+class ExamSerializer(serializers.ModelSerializer):
+    course_exam = CourseDetailSerializer()
+
+    class Meta:
+        model = Exam
+        fields = ['title', 'course_exam', 'passing_score', 'duration']
+
+
+class AssignmentSerializer(serializers.ModelSerializer):
+    course_assignment = CourseListSerializer()
+    students = UserProfileSimpleSerializer()
+
+    class Meta:
+        model = Assignment
+        fields = ['title', 'description', 'due_date', 'course_assignment', 'students']
+
+
+class LessonSerializer(serializers.ModelSerializer):
+    course_lesson = CourseListSerializer()
+
+    class Meta:
+        model = Lesson
+        fields = ['title', 'video_url', 'content', 'course_lesson']
 

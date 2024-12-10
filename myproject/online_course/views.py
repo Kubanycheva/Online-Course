@@ -11,6 +11,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
+def course_view(request, course_id):
+    course = Course.objects.get(id=course_id)
+    return render(request, 'course_template.html', {'course': course})
+
+
 class RegisterView(generics.CreateAPIView):
     serializer_class = UserProfileSerializer
 
@@ -86,13 +91,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CourseListViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseListSerializer
-<<<<<<< HEAD
     pagination_class = CoursePagination
-=======
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_class = CourseFilter
     search_fields = ['course_name']
->>>>>>> 5d48fff8455dfe79c07639de137faf8ed162cb4c
 
 
 class CourseDetailViewSet(viewsets.ModelViewSet):
