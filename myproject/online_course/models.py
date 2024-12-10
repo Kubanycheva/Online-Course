@@ -52,6 +52,15 @@ class Course(models.Model):
                 return f'3+'
             return ratings.count()
         return 0
+    def get_check_good(self):
+        ratings = self.review.all()
+        if ratings.exists():
+            num = 0
+            for i in ratings:
+                if i.rating > 3:
+
+
+
 
 
 class Lesson(models.Model):
