@@ -44,6 +44,14 @@ class Course(models.Model):
             return round(sum(rating.rating for rating in ratings) / ratings.count(), 1)
         return 0
 
+    def get_avg_people(self):
+        ratings = self.review.all()
+        if ratings.exists():
+            if ratings.count() > 3:
+                return f'3+'
+            return ratings.count()
+        return 0
+
 
 class Lesson(models.Model):
     title = models.CharField(max_length=32, null=True, blank=True)
@@ -92,7 +100,7 @@ class Certificate(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     course_review = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True, related_name='review')
     rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])
     comment = models.TextField()

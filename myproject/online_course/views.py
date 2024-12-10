@@ -86,13 +86,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CourseListViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseListSerializer
-<<<<<<< HEAD
     pagination_class = CoursePagination
-=======
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_class = CourseFilter
     search_fields = ['course_name']
->>>>>>> 5d48fff8455dfe79c07639de137faf8ed162cb4c
 
 
 class CourseDetailViewSet(viewsets.ModelViewSet):

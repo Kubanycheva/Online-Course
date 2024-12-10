@@ -84,13 +84,17 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class CourseListSerializer(serializers.ModelSerializer):
     average_rating = serializers.SerializerMethodField()
+    avg_people = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
-        fields = ['id', 'course_name', 'created_by', 'price', 'average_rating']
+        fields = ['id', 'course_name', 'created_by', 'price', 'average_rating', 'avg_people']
 
     def get_average_rating(self, obj):
         return obj.get_average_rating()
+
+    def get_avg_people(self, obj):
+        return obj.get_avg_people()
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
