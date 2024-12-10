@@ -11,6 +11,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
+def course_view(request, course_id):
+    course = Course.objects.get(id=course_id)
+    return render(request, 'course_template.html', {'course': course})
+
+
 class RegisterView(generics.CreateAPIView):
     serializer_class = UserProfileSerializer
 
