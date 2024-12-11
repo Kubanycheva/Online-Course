@@ -2,42 +2,42 @@ from rest_framework import serializers
 from .models import *
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from rest_framework_simplejwt.tokens import RefreshToken
+# from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('email', 'password', 'first_name', 'last_name', 'age',
-                  'phone_number', 'status')
-        extra_kwargs = {'password': {'write_only': True}}
-
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        return user
-
-
-class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    password = serializers.CharField(write_only=True)
-
-    def validate(self, data):
-        user = authenticate(**data)
-        if user and user.is_active:
-            return user
-        raise serializers.ValidationError('Неверные учетные данные')
-
-    def to_representation(self, instance):
-        refresh = RefreshToken.for_user(instance)
-        return {
-            'user': {
-                'username': instance.username,
-                'email': instance.email,
-            },
-            'access': str(refresh.access_token),
-            'refresh': str(refresh),
-        }
+#
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('email', 'password', 'first_name', 'last_name', 'age',
+#                   'phone_number', 'status')
+#         extra_kwargs = {'password': {'write_only': True}}
+#
+#     def create(self, validated_data):
+#         user = User.objects.create_user(**validated_data)
+#         return user
+#
+#
+# class LoginSerializer(serializers.Serializer):
+#     username = serializers.CharField()
+#     password = serializers.CharField(write_only=True)
+#
+#     def validate(self, data):
+#         user = authenticate(**data)
+#         if user and user.is_active:
+#             return user
+#         raise serializers.ValidationError('Неверные учетные данные')
+#
+#     def to_representation(self, instance):
+#         refresh = RefreshToken.for_user(instance)
+#         return {
+#             'user': {
+#                 'username': instance.username,
+#                 'email': instance.email,
+#             },
+#             'access': str(refresh.access_token),
+#             'refresh': str(refresh),
+#         }
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -67,14 +67,17 @@ class ReviewSerializer(serializers.ModelSerializer):
 class CourseListSerializer(serializers.ModelSerializer):
     updated_at = serializers.DateTimeField(format('%m.%Y'))
     average_rating = serializers.SerializerMethodField()
-    created_by = UserProfileSimpleSerializer()
+    check_good = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
-        fields = ['course_name', 'created_by', 'price', 'average_rating', 'updated_at']
+        fields = ['course_name', 'created_by', 'price', 'average_rating', 'updated_at', 'check_good']
 
     def get_average_rating(self, obj):
         return obj.get_average_rating()
+
+    def get_check_good(self, obj):
+        return obj.get_check_good()
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
@@ -84,6 +87,18 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ['course_name', 'description', 'category', 'level', 'price', 'created_by']
+
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['course_name', 'category', 'description', 'created_by']
+
+
+class CourseDetailUpdateDeleteAPIView(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['course_name', 'category', 'description', 'created_by']
 
 
 class AssignmentSerializer(serializers.ModelSerializer):
