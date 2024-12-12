@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class UserProfile(AbstractUser):
+    username = models.CharField(max_length=150, unique=True)
     email = models.CharField(max_length=32)
     password = models.CharField(max_length=400)
     ROLE_CHOICES = (
@@ -113,10 +114,36 @@ class Review(models.Model):
         return f'{self.user} - {self.rating}'
 
 
+class Cart(models.Model):
+    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='cart')
+
+    def __str__(self):
+        return f'{self.user}'
 
 
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(default=1)
+
+    def __str__(self):
+        return f'{self.course} - {self.quantity}'
 
 
+class Favorite(models.Model):
+    user = models.ForeignKey(Course, on_delete=models.CASCADE)
+    created_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user} - {self.created_date}'
+
+
+class FavoriteLesson(models.Model):
+    cart = models.ForeignKey(Favorite, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.lesson} - {self.cart}'
 
 
 

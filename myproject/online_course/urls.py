@@ -12,19 +12,27 @@ router.register(r'exam', ExamViewSet, basename='exam-list')
 router.register(r'certificate', CertificateViewSet, basename='certificate-list')
 router.register(r'review', ReviewViewSet, basename='review')
 router.register(r'review-detail', ReviewViewSet, basename='review-detail')
+router.register(r'cart', CartViewSet, basename='cart_list')
+router.register(r'cart_item', CartItemViewSet, basename='cart_items')
 
 
 urlpatterns = [
     path('', include(router.urls)),
 
-    #
-    # path('register/', RegisterView.as_view(), name='register'),
-    # path('login/', CustomLoginView.as_view(), name='login'),
-    # path('logout/', LogoutView.as_view(), name='logout'),
+
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 
     path('course/', CourseListAPIView.as_view(), name='course_list'),
     path('course/<int:pk>/', CourseDetailAPIView.as_view(), name='course_detail'),
     path('create_course/', CourseCreateAPIView.as_view(), name='course_create'),
     path('create_course/<int:pk>', CourseDetailUpdateDeleteAPIView.as_view(), name='course_create'),
+
+    path('favorite', FavoriteListAPIView.as_view(), name='favorite_list'),
+    path('favorite/<int:pk>', FavoriteListAPIView.as_view(), name='favorite_list'),
+    path('favorite_lesson', FavoriteLessonListAPIView.as_view(), name='favorite_list'),
+    path('favorite_lesson/<int:pk>', FavoriteLessonListAPIView.as_view(), name='favorite_list'),
+
 
 ]

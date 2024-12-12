@@ -36,3 +36,7 @@ class ExamAdmin(TranslationAdmin):
         }
 
 
+admin.site.register(Cart)
+admin.site.register(CartItem)
+admin.site.register(Favorite)
+admin.site.register(FavoriteLesson)
