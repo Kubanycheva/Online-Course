@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 class UserProfile(AbstractUser):
     username = models.CharField(max_length=150, unique=True)
-    email = models.CharField(max_length=32)
     password = models.CharField(max_length=400)
     ROLE_CHOICES = (
         ('клиент', 'клиент'),
